@@ -35,7 +35,7 @@ Le navigateur appelle uniquement `/api/verify` (`src/app/api/verify/route.ts`), 
 
 ```json
 { "success": true, "status": "success", "message": "Fichier traité avec succès.",
-  "totalRows": 42, "resultUrl": "https://docs.google.com/spreadsheets/d/…",
+  "totalRows": 42, "stats": { "OK_Match_URL": 40, "ANOMALIE_A_VERIFIER": 2 }, "resultUrl": "https://docs.google.com/spreadsheets/d/…",
   "downloadUrl": "https://docs.google.com/spreadsheets/d/…/export?format=xlsx" }
 ```
 
