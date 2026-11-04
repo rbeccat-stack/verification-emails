@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+/* -------------------------------------------------------------------------- */
+/*  Design tokens — charte Invox (invox.fr)                                   */
+/*  Fond clair, bleu nuit, accents bleu / orange, ombres « décalées » franches */
+/*  Exposés en utilitaires Tailwind : bg-surface, text-fg-muted, shadow-card…  */
+/* -------------------------------------------------------------------------- */
+@theme {
+  --font-sans: var(--font-poppins), system-ui, sans-serif;
+  --font-display: var(--font-gabarito), var(--font-poppins), system-ui, sans-serif;
+
+  /* Palette de marque (presets WordPress d'invox.fr) */
+  --color-navy: #113c55; /* invox-blue-800 : titres, ombres décalées */
+  --color-ink: #004261; /* invox-darkblue : texte courant fort */
+  --color-blue: #3e9fd9; /* invox-blue : bordures CTA, accents */
+  --color-blue-50: #eaf5fb;
+  --color-blue-100: #d4eaf7;
+  --color-blue-200: #aad5ee;
+  --color-blue-700: #195a80; /* bleu lisible pour du texte sur blanc */
+  --color-orange: #f4704d; /* invox-orange : mot-clé mis en avant */
+  --color-orange-50: #feece7;
+  --color-orange-200: #f9b29f;
+  --color-orange-600: #c0330c;
+  --color-yellow: #f0d100;
+
+  /* Canvas */
+  --color-bg-base: #ffffff;
+  --color-bg-soft: #f5f7f9;
+  --color-bg-input: #ffffff;
+
+  /* Surfaces & bordures */
+  --color-surface: #ffffff;
+  --color-border: #d4eaf7;
+  --color-border-hover: #aad5ee;
+
+  /* Texte */
+  --color-fg: #113c55;
+  --color-fg-body: #29333d;
+  --color-fg-muted: #536779;
+
+  /* Accent */
+  --color-accent: #3e9fd9;
+
+  /* Sémantique (qualité email, erreurs) — contrastes AA sur blanc */
+  --color-success: #15803d;
+  --color-warning: #a16207;
+  --color-danger: #c0330c;
+
+  /* Ombres : diffuse douce pour les cartes, « décalée » pour les éléments actifs */
+  --shadow-card: 0 1px 2px rgba(17, 60, 85, 0.06), 0 8px 24px rgba(17, 60, 85, 0.06);
+  --shadow-offset: 5px 5px 0 0 #113c55;
+  --shadow-offset-sm: 2px 2px 0 0 #113c55;
+
+  /* Motion */
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-float: float 8s ease-in-out infinite;
+  --animate-pulse-soft: pulse-soft 2s ease-in-out infinite;
+  --animate-fade-up: fade-up 600ms var(--ease-expo) both;
+  --animate-scale-in: scale-in 600ms var(--ease-expo) both;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-14px) rotate(2deg); }
+  }
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.55; }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scale-in {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Base                                                                      */
+/* -------------------------------------------------------------------------- */
+html {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--color-bg-base);
+  color: var(--color-fg-body);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+}
+
+::selection {
+  background: var(--color-blue-100);
+  color: var(--color-navy);
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Utilitaires composés                                                      */
+/* -------------------------------------------------------------------------- */
+
+/* Bouton Invox : fond blanc, liseré bleu, ombre bleu nuit décalée qui
+   « s'enfonce » au survol et au clic. */
+@utility btn-invox {
+  border: 1px solid var(--color-blue);
+  border-radius: 8px;
+  background-color: #fff;
+  color: var(--color-navy);
+  box-shadow: var(--shadow-offset);
+  transition:
+    transform 200ms var(--ease-expo),
+    box-shadow 200ms var(--ease-expo),
+    background-color 200ms var(--ease-expo);
+  @media (hover: hover) {
+    &:hover:not(:disabled) {
+      transform: translate(3px, 3px);
+      box-shadow: var(--shadow-offset-sm);
+      background-color: var(--color-blue-50);
+    }
+  }
+  &:active:not(:disabled) {
+    transform: translate(5px, 5px);
+    box-shadow: none;
+  }
+  &:disabled {
+    cursor: not-allowed;
+    border-color: var(--color-border);
+    color: var(--color-fg-muted);
+    background-color: var(--color-bg-soft);
+    box-shadow: none;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Accessibilité : motion réduite                                            */
+/* -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
